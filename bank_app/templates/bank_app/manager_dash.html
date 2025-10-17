@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="manager-body">
+    <div class="dashboard-container">
+        <div class="manager-header">
+            <h1>welcome to your Branch Manager Dashboard</h1>
+            <p>Hey, {{ manager.full_name }} | {{ manager.branch.name }}</p>
+        </div>
+
+        <!-- Pending Approvals Section -->
+        <div class="customer-section">
+            <h3>📋 Pending Customer Approvals</h3>
+            
+            {% for customer in pending_customers %}
+            <div class="customer-card pending">
+                <strong>{{ customer.full_name }}</strong><br>
+                📞 {{ customer.contact_number }}<br>
+                👤 {{ customer.username }}<br>
+                🏦 Account: {{ customer.account_number }}
+                
+                <div class="approval-buttons">
+                    <form method="post" action="{% url 'approve_customer' customer.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="approve-btn">✅ Approve</button>
+                    </form>
+                    <form method="post" action="{% url 'reject_customer' customer.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="reject-btn">❌ Reject</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                No pending customer approvals
+            </div>
+            {% endfor %}
+        </div>
+
+        
+        <!-- Approved Customers Section -->
+<div class="customer-section">
+    <h3>✅ Approved Customers</h3>
+    
+    {% for customer in approved_customers %}
+    <div class="customer-card approved">
+        <!-- Customer Info on LEFT -->
+        <div class="customer-info">
+            <strong>{{ customer.full_name }}</strong><br>
+            📞 {{ customer.contact_number }}<br>
+            👤 {{ customer.username }}<br>
+            💰 Balance: ${{ customer.balance }}
+        </div>
+        
+        <!-- Delete Button on RIGHT -->
+        <div class="customer-actions">
+            <form method="post" action="{% url 'delete_customer' customer.id %}" 
+                  onsubmit="return confirm('Are you sure you want to delete {{ customer.full_name }}? This action cannot be undone.');">
+                {% csrf_token %}
+                <button type="submit" class="delete-customer-btn" title="Delete Customer">
+                    🗑️ Delete
+                </button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        No approved customers yet
+    </div>
+    {% endfor %}
+</div>
+
+        <!-- Logout -->
+        <form action="{% url 'logout' %}" method="post" style="text-align: center;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">🚪 Logout</button>
+        </form>
+    </div>
+</body>
+</html>

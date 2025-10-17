@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="profile-body">
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>👤 Update Profile</h1>
+            <p>Secure profile changes with OTP verification</p>
+        </div>
+
+        <!-- Current Information -->
+        <div class="current-info">
+            <h3>Current Information</h3>
+            <div class="info-item">
+                <span class="info-label">Username:</span>
+                <span class="info-value">{{ user.username }}</span>
+            </div>
+            <!-- <div class="info-item">
+                <span class="info-label">Account Number:</span>
+                <span class="info-value">{{ user.account_number }}</span>
+            </div> -->
+            <div class="info-item">
+                <span class="info-label">Branch:</span>
+                <span class="info-value">{{ user.branch.name }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Role:</span>
+                <span class="info-value">{{ user.role|title }}</span>
+            </div>
+        </div>
+
+        <!-- Update Form -->
+        <form method="post" class="profile-form">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="full_name" class="form-input" value="{{ user.full_name }}" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Contact Number</label>
+                <input type="text" name="contact_number" class="form-input" value="{{ user.contact_number }}" required>
+            </div>
+
+            <div class="profile-buttons">
+                <button type="submit" class="update-btn">
+                    🔒 Request OTP to Update
+                </button>
+                <a href="{% url 'customer_dashboard' %}" class="back-profile-btn">
+                    ← Back to Dashboard
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

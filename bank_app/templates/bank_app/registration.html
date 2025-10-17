@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Registration</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="registration-body">
+    <div class="registration-container customer-register">
+        <div class="registration-header">
+            <h1>👤 Customer Registration</h1>
+            <p>Join our banking family today</p>
+        </div>
+
+        {% if error %}
+            <div class="error" style="margin-bottom: 20px;">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" class="registration-form">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-input" placeholder="Choose a username" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-input" placeholder="Create a password" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="full_name" class="form-input" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Contact Number</label>
+                <input type="text" name="contact_number" class="form-input" placeholder="Your phone number" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Select Branch</label>
+                <select name="branch" class="form-select" required>
+                    <option value="">Choose your branch</option>
+                    {% for branch in branches %}
+                    <option value="{{ branch.id }}">{{ branch.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="registration-buttons">
+                <button type="submit" class="register-btn">
+                    📝 Register as Customer
+                </button>
+                <a href="{% url 'login' %}" class="cancel-btn">
+                    ← Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

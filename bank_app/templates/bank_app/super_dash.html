@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="super-body">
+    <div class="super-container">
+        <!-- Admin Header -->
+        <div class="admin-header">
+            <h1>👑 Admin Dashboard</h1>
+            <p>Welcome, {{ user.full_name }} - System Administrator</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-number">{{ branches.count }}</div>
+                <div class="stat-label">Total Branches</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ pending_managers.count }}</div>
+                <div class="stat-label">Pending Managers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">System Access</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="admin-actions">
+            <div class="admin-action-card">
+                <div class="admin-action-icon">🏢</div>
+                <div class="admin-action-title">Manage Branches</div>
+                <div class="admin-action-desc">Create and manage bank branches</div>
+                <a href="{% url 'create_branch' %}" class="admin-action-btn">
+                    Create Branch
+                </a>
+            </div>
+            
+            <div class="admin-action-card">
+                <div class="admin-action-icon">👥</div>
+                <div class="admin-action-title">Manager Approvals</div>
+                <div class="admin-action-desc">Review pending manager requests</div>
+                <a href="#manager-approvals" class="admin-action-btn">
+                    View Requests
+                </a>
+            </div>
+            
+            <div class="admin-action-card">
+                <div class="admin-action-icon">⚙️</div>
+                <div class="admin-action-title">System Settings</div>
+                <div class="admin-action-desc">Advanced system configuration</div>
+                <a href="/admin" class="admin-action-btn" target="_blank">
+                    Database Admin
+                </a>
+            </div>
+        </div>
+
+        <!-- Pending Manager Approvals -->
+        <div class="admin-section" id="manager-approvals">
+            <h3>👥 Pending Manager Approvals</h3>
+            
+            {% for manager in pending_managers %}
+            <div class="manager-card">
+                <strong>{{ manager.full_name }}</strong><br>
+                📞 {{ manager.contact_number }}<br>
+                👤 {{ manager.username }}<br>
+                🏦 Branch: {{ manager.branch.name }}
+                
+                <div class="manager-actions">
+                    <form method="post" action="{% url 'approve_manager' manager.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="manager-approve-btn">✅ Approve</button>
+                    </form>
+                    <form method="post" action="{% url 'reject_manager' manager.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="manager-reject-btn">❌ Reject</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p style="text-align: center; color: #6b7280; padding: 20px;">
+                No pending manager approvals
+            </p>
+            {% endfor %}
+        </div>
+
+        <!-- Branch Management -->
+        <div class="admin-section">
+            <h3>🏢 Branch Management</h3>
+            
+            {% for branch in branches %}
+            <div class="branch-card">
+                <strong>{{ branch.name }}</strong><br>
+                📍 {{ branch.address }}<br>
+                🆔 Branch ID: {{ branch.id }}
+            </div>
+            {% empty %}
+            <p style="text-align: center; color: #6b7280; padding: 20px;">
+                No branches created yet
+            </p>
+            {% endfor %}
+        </div>
+
+        <!-- Logout -->
+        <form action="{% url 'logout' %}" method="post" style="text-align: center; margin-top: 40px;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn" style="background: #1e3a8a;">🚪 Admin Logout</button>
+        </form>
+    </div>
+</body>
+</html>

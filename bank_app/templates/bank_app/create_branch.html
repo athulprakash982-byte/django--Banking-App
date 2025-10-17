@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create New Branch</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="super-body">
+    <div class="super-container">
+        <div class="admin-header">
+            <h1>🏢 Create New Branch</h1>
+            <p>Add a new branch to your banking network</p>
+        </div>
+
+        <div class="admin-section">
+            <form method="post" class="profile-form">
+                {% csrf_token %}
+                
+                <div class="form-row">
+                    <label class="form-label">Branch Name</label>
+                    <input type="text" name="name" class="form-input" placeholder="Enter branch name" required>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">Branch Address</label>
+                    <textarea name="address" class="form-input" placeholder="Enter full address" rows="4" required></textarea>
+                </div>
+
+                <div class="profile-buttons">
+                    <button type="submit" class="update-btn">
+                        🏢 Create Branch
+                    </button>
+                    <a href="{% url 'super_dashboard' %}" class="back-profile-btn">
+                        ← Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

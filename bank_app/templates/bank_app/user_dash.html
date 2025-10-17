@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="customer-body">
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Welcome to Your Banking Dashboard</h1>
+            <p>Hello, {{ user.full_name }}!</p>
+        </div>
+
+        <div class="user-info">
+            <h3>Account Information</h3>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Contact:</strong> {{ user.contact_number }}</p>
+            <p><strong>Branch:</strong> {{ user.branch.name }}</p>
+            <p><strong>Account Status:</strong> {{ user.status|title }}</p>
+        </div>
+
+        <div class="balance-card">
+            <h3>Current Balance</h3>
+            <div class="balance-amount">Rs.{{ user.balance }}</div>
+            <p>Available for withdrawal</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'deposit' %}" class="action-btn">💰 Deposit Money</a>
+            <a href="{% url 'withdraw' %}" class="action-btn">💳 Withdraw Money</a>
+            <a href="{% url 'profile_update' %}" class="action-btn">👤 Update Profile</a>
+        </div>
+
+        <form action="{% url 'logout' %}" method="post" style="text-align: center;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">🚪 Logout</button>
+        </form>
+    </div>
+</body>
+</html>

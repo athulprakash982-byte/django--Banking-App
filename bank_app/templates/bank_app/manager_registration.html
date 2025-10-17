@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Registration</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="registration-body">
+    <div class="registration-container manager-register">
+        <div class="registration-header">
+            <h1>👔 Manager Registration</h1>
+            <p>Apply to become a branch manager</p>
+        </div>
+
+        {% if error %}
+            <div class="error" style="margin-bottom: 20px;">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" class="registration-form">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-input" placeholder="Choose a username" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-input" placeholder="Create a password" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="full_name" class="form-input" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Contact Number</label>
+                <input type="text" name="contact_number" class="form-input" placeholder="Your phone number" required>
+            </div>
+
+            <div class="form-row">
+                <label class="form-label">Select Branch</label>
+                <select name="branch" class="form-select" required>
+                    <option value="">Choose available branch</option>
+                    {% for branch in branches %}
+                    <option value="{{ branch.id }}">{{ branch.name }}</option>
+                    {% empty %}
+                    <option disabled>No branches available</option>
+                    {% endfor %}
+                </select>
+                {% if not branches %}
+                <small style="color: #ef4444; display: block; margin-top: 5px;">
+                    All branches currently have managers. Please check back later.
+                </small>
+                {% endif %}
+            </div>
+
+            <div class="registration-buttons">
+                <button type="submit" class="register-btn" {% if not branches %}disabled{% endif %}>
+                    📋 Apply as Manager
+                </button>
+                <a href="{% url 'login' %}" class="cancel-btn">
+                    ← Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

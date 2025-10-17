@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="profile-body">
+    <div class="profile-container otp-container">
+        <div class="profile-header">
+            <h1>🔐 OTP Verification</h1>
+            <p>Enter the code sent to your contact number</p>
+        </div>
+
+        <div class="otp-instruction">
+            <h3>📲 Security Code</h3>
+            <p>For testing purposes, use this OTP:</p>
+            <div class="otp-code">123456</div>
+            <p>In a real application, this would be sent via SMS</p>
+        </div>
+
+        {% if error %}
+            <div class="error" style="margin-bottom: 20px;">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{% url 'verify_otp' %}" class="profile-form">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <input type="text" name="otp" class="otp-input" placeholder="Enter 6-digit OTP" maxlength="6" required>
+            </div>
+
+            <div class="profile-buttons">
+                <button type="submit" class="update-btn">
+                    ✅ Verify & Update
+                </button>
+                <a href="{% url 'profile_update' %}" class="back-profile-btn">
+                    ← Back to Profile
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deposit Money</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="transaction-body">
+    <div class="transaction-container">
+        <div class="transaction-header">
+            <h1>💰 Deposit Money</h1>
+            <div class="balance">Current Balance: Rs.{{ user.balance }}</div>
+        </div>
+
+        <form method="post" class="transaction-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <input type="number" 
+                       name="amount" 
+                       step="0.01" 
+                       min="0.01" 
+                       placeholder="Enter amount to deposit" 
+                       class="amount-input"
+                       required>
+            </div>
+
+            <div class="transaction-buttons">
+                <button type="submit" class="deposit-btn">
+                    💳 Deposit Now
+                </button>
+                <a href="{% url 'customer_dashboard' %}" class="back-btn">
+                    ← Back to Dashboard
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

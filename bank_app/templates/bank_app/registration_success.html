@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Successful</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="registration-body">  
+    <div class="success-container">
+        <div class="success-icon">✅</div>
+        <h1 class="success-title">Registration Submitted!</h1>
+        <p class="success-message">
+            {% if message %}
+                {{ message }}
+            {% else %}
+                Your account is pending approval. You will be notified once approved by the administrator.
+            {% endif %}
+        </p>
+        <a href="{% url 'login' %}" class="admin-action-btn" style="display: inline-block;">
+            ← Back to Login
+        </a>
+    </div>
+</body>
+</html>
+</html>
