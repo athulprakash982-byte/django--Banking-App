@@ -2,15 +2,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome to Our Bank</title>
+    <title>Welcome to SecureBank</title>
     <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
 </head>
-<body class="registration-body">
-    <div class="registration-container">
-        <h1>🏦 Welcome to Our Bank</h1>
-        <p>Secure, Reliable Banking Services</p>
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="{% url 'login' %}" class="admin-action-btn">Register or login</a>
+<body class="index-body">
+    <div class="index-container">
+        <!-- Header -->
+        <div class="index-header">
+            <h1>🏦 SecureBank</h1>
+            <p>Your Trusted Banking Partner</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="index-content">
+            <div class="welcome-card">
+                <h2>Welcome to Secure Banking</h2>
+                <p>Experience the future of digital banking with security, speed, and simplicity.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure</h3>
+                        <p>Bank-level security with OTP verification</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast</h3>
+                        <p>Instant transactions and approvals</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Multi-Role</h3>
+                        <p>Separate interfaces for customers and managers</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-section">
+                <h3>Get Started</h3>
+                <div class="action-buttons">
+                    <a href="{% url 'login' %}" class="index-btn primary">
+                        🔐 Login to Your Account
+                    </a>
+                    <a href="{% url 'register' %}" class="index-btn secondary">
+                        📝 Register as Customer
+                    </a>
+                    <a href="{% url 'register_manager' %}" class="index-btn tertiary">
+                        👔 Apply as Manager
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="index-footer">
+            <p>© 2024 SecureBank. All rights reserved.</p>
         </div>
     </div>
 </body>
