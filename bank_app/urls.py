@@ -4,6 +4,7 @@ from . import views
 urlname = 'bank_app'
 
 urlpatterns = [
+    path('', views.index, name='index'), 
     path('login/', views.login_view, name='login'),
 
     path('super-dashboard/', views.super_dashboard, name='super_dashboard'),

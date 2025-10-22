@@ -5,6 +5,10 @@ from .models import User, Branch, Transaction
 from decimal import Decimal
 
 
+def index(request):
+    return render(request,'bank_app/index.html')
+
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -412,9 +416,4 @@ def delete_customer(request, customer_id):
             customer.delete()
         
         return redirect('manager_dashboard')
-                                                    
-
-
-
-
     
