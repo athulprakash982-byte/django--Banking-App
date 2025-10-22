@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Our Bank</title>
+    <link rel="stylesheet" href="{% static 'bank_app/style.css' %}">
+</head>
+<body class="registration-body">
+    <div class="registration-container">
+        <h1>🏦 Welcome to Our Bank</h1>
+        <p>Secure, Reliable Banking Services</p>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{% url 'login' %}" class="admin-action-btn">Login</a>
+            <a href="{% url 'register' %}" class="admin-action-btn">Register</a>
+        </div>
+    </div>
+</body>
+</html>
